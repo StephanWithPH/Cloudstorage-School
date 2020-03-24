@@ -31,12 +31,18 @@
 {{--            </li>--}}
         </ul>
         <ul class="navbar-nav ml-auto">
+            @if(\Illuminate\Support\Facades\Auth::check())
             <li class="nav-item">
-                <a class="nav-link" href="#">Login</a>
+                <a class="nav-link" href="{{ action('Auth\LoginController@logout') }}">Logout</a>
+            </li>
+            @else
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('login') }}">Login</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link btn btn-primary text-white" href="#">Signup</a>
+                <a class="nav-link btn btn-primary text-white" href="{{ route('register') }}">Signup</a>
             </li>
+            @endif
         </ul>
     </div>
 </nav>
