@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -34,7 +35,14 @@ class LoginController extends Controller
                 return redirect('/admin');
             }
             else{
-                return redirect(session('url')['intended']);
+                if (Auth::check()) {
+                    if(isset(session('url')['intended'])){
+                        return redirect(session('url')['intended']);
+                    }
+                    else {
+                        return redirect()->action('HomeController@loadHomePage');
+                    }
+                }
             }
         }
     }

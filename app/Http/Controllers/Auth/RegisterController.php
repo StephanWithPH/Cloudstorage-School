@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -32,7 +33,12 @@ class RegisterController extends Controller
     /*protected $redirectTo = RouteServiceProvider::HOME;*/
     protected function registered() {
         if (Auth::check()) {
-            return redirect(session('url')['intended']);
+            if(isset(session('url')['intended'])){
+                return redirect(session('url')['intended']);
+            }
+            else {
+                return redirect()->action('HomeController@loadHomePage');
+            }
         }
     }
 

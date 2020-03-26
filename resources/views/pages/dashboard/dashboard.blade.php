@@ -1,7 +1,7 @@
 @extends('app')
 @section('title', "CloudHub | Dashboard")
 @section('body')
-    <div class="img-fluid w-100 vertical-center" style="background-image: url('{{ asset('img/banner-home.jpg') }}'); height: 70vh">
+    <div class="img-fluid w-100 vertical-center" style="background-image: url('{{ asset('img/banner-home.jpg') }}'); height: 20vh">
         <div class="container">
             <div class="row">
                 <div class="col">
