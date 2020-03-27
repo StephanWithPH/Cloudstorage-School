@@ -15,7 +15,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 </head>
-<body>
+<body class="loading">
+<div class="preloader" style="background-image: url('{{asset('img/loadingspinner.gif')}}');"></div>
 @include('includes.topbar')
 @yield('body')
 @include('includes.footer')
@@ -30,5 +31,12 @@
 <script src="https://kit.fontawesome.com/c3da043785.js" crossorigin="anonymous"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+
+<script>
+    $(window).load(function() {
+        $('.preloader').fadeOut(950);
+        $('body').removeClass('loading');
+    });
+</script>
 </body>
 </html>

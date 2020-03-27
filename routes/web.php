@@ -18,14 +18,21 @@ Route::get('/logout', 'Auth\LoginController@logout');
 Route::get('/dashboard', 'DashboardController@loadDashboardPage')->middleware('auth');
 Route::get('/dashboard/files', 'DashboardController@loadFilesPage')->middleware('auth');
 
-Route::get('/dashboard/files/shared', 'DashboardController@loadSharedFilesPage')->middleware('auth');
+
 
 Route::post('/dashboard/files/upload', 'FileController@store')->middleware('auth');
 Route::get('/dashboard/files/download/{id}', 'FileController@get')->middleware('auth');
+Route::get('/dashboard/files/remove/{id}', 'FileController@remove')->middleware('auth');
+
+/* Shared files */
+Route::get('/dashboard/files/shared', 'DashboardController@loadSharedFilesPage')->middleware('auth', 'verified', 'password.confirm');
 Route::get('/dashboard/files/shared/download/{id}', 'FileController@getShared')->middleware('auth');
 Route::get('/dashboard/files/shared/remove/{id}', 'FileController@removeShared')->middleware('auth');
+Route::get('/dashboard/files/shared/owner/remove/{id}/{userid}', 'FileController@removeSharedOwner')->middleware('auth');
+/* Add share from files page */
+Route::post('/dashboard/files/shared/owner/add', 'FileController@addSharedOwner')->middleware('auth', 'verified');
 
-Route::get('/dashboard/files/remove/{id}', 'FileController@remove')->middleware('auth');
+
 
 
 Auth::routes(['verify' => true]);

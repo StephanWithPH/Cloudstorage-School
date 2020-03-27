@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\File;
+use App\User;
+use Facade\Ignition\Support\Packagist\Package;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -191,6 +193,80 @@ class FileController extends Controller
         else {
             flash(__('language.filenotfound'))->error();
         }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function removeSharedOwner($id, $userid)
+    {
+        //
+        $file = User::find($userid)->shared->where('id', $id)->first();
+        if($file && $file->user->id == Auth::user()->id){
+            $file->pivot->deleted = 1;
+            $file->pivot->save();
+            flash(__('language.deletesharesuccess'))->success();
+        }
+        else {
+            flash(__('language.filenotfound'))->error();
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function addSharedOwner(Request $request)
+    {
+        //
+
+        /* Get file of authenticated user to make sure user is authenticated */
+        $file = Auth::user()->files->find($request->fileId);
+        /* Get user the file needs to be shared to */
+        $shareuser = User::where('email', $request->userEmail)->first();
+        if(Auth::user()->email == $request->userEmail){
+            flash(__('language.shareyourself'))->error();
+        }
+        else {
+            if($file){
+                if($shareuser){
+                    if(!$shareuser->shared->find($file->id)){
+
+                        $file->shares()->attach($shareuser);
+                        $file->save();
+                        flash(__('language.addsharesuccess'))->success();
+                    }
+                    else {
+                        if($shareuser->shared->find($file->id) && $shareuser->shared->find($file->id)->pivot->deleted == true){
+                            $sharedfile = $shareuser->shared->find($file->id);
+                            $sharedfile->pivot->deleted = false;
+                            $sharedfile->pivot->save();
+                            flash(__('language.addsharesuccess'))->success();
+                        }
+                        else {
+                            flash(__('language.shareexists'))->error();
+                        }
+                    }
+                }
+                else {
+                    flash(__('language.usernotexists'))->error();
+                }
+
+            }
+            else {
+                flash(__('language.filenotfound'))->error();
+            }
+        }
+
 
         return redirect()->back();
     }

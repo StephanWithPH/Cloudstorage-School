@@ -54,5 +54,9 @@ return [
 
     'deletedshare' => '<div class="text-center">Whoops, you\'re trying to download a file you do not have access to (anymore)!</div>',
     'filenotfound' => '<div class="text-center">Whoops, that file could not be found!</div>',
+    'addsharesuccess' => '<div class="text-center">File successfully shared with user!</div>',
+    'shareexists' => '<div class="text-center">The file you are trying to share is already shared with this user!</div>',
+    'usernotexists' => '<div class="text-center">The user you are trying to share this file to is not found!</div>',
+    'shareyourself' => '<div class="text-center">You cannot share files with yourself!</div>'
 
 ];

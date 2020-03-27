@@ -38,7 +38,45 @@
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item p-1"><a class="btn btn-primary w-100 text-white" href="{{ action('FileController@get', $file->id) }}">Download</a></li>
-                            <li class="list-group-item p-1"><a class="btn btn-info w-100 text-white">Share</a></li>
+                            <li class="list-group-item p-1">
+                                <a class="btn btn-info w-100 text-white" data-toggle="collapse" href="#collapse{{$file->id}}" role="button" aria-expanded="false" aria-controls="collapse{{$file->id}}">Share</a>
+                                <div class="collapse mt-2" id="collapse{{$file->id}}">
+                                    @php
+                                    $noshares = true;
+                                    @endphp
+
+                                    @forelse($file->shares as $fileshares)
+                                        @if($fileshares->pivot->deleted == false)
+                                            @php
+                                            $noshares = false
+                                            @endphp
+                                            <div class="card card-body">
+                                                <div class="row">
+                                                    <div class="col text-center">{{$fileshares->email}}</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <a class="btn btn-danger w-100 text-white" href="{{ action('FileController@removeSharedOwner', [$file->id, $fileshares->id]) }}">Delete fileshare</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @empty
+                                        @php
+                                            $noshares = true
+                                        @endphp
+                                    @endforelse
+                                    @if($noshares)
+                                        <p class="text-center mt-4">This file hasn't been shared yet!</p>
+                                    @endif
+                                    <form action="{{ action('FileController@addSharedOwner') }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="fileId" value="{{ $file->id }}"/>
+                                        <input type="email" name="userEmail" class="form-control w-100 mt-1 mb-1" placeholder="Fill in an email address"/>
+                                        <button class="btn btn-success w-100 text-white" type="submit">Add share</button>
+                                    </form>
+                                </div>
+                            </li>
                             <li class="list-group-item p-1"><a class="btn btn-danger w-100 text-white" href="{{ action('FileController@remove', $file->id) }}">Delete</a></li>
                         </ul>
                     </div>
@@ -62,43 +100,6 @@
         $('input[type=file]').change(function() {
             $('.fileupload').submit();
         });
-
-        {{--$('.fileupload').on('submit', function(event){--}}
-        {{--    event.preventDefault();--}}
-
-        {{--    $.ajaxSetup({--}}
-        {{--        headers: {--}}
-        {{--            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
-        {{--        }--}}
-        {{--    });--}}
-        {{--    console.log('uploading');--}}
-
-        {{--    var formData = new FormData($(".fileupload")[0]);--}}
-        {{--    console.log(formData)--}}
-        {{--    /* Submit form data using ajax*/--}}
-        {{--    $.ajax({--}}
-        {{--        url: "{{ action('FileController@store') }}",--}}
-        {{--        method: 'post',--}}
-        {{--        data: formData,--}}
-        {{--        processData : false,--}}
-        {{--        dataType: 'JSON',--}}
-        {{--        contentType: false,--}}
-        {{--        cache: false,--}}
-        {{--        success: function(response){--}}
-        {{--            //--------------------------}}
-        {{--            console.log('uploaded');--}}
-
-        {{--            $('.fileupload').trigger('reset');--}}
-        {{--            // setTimeout(function(){--}}
-        {{--            //     $('#res_message').hide();--}}
-        {{--            //     $('#msg_div').hide();--}}
-        {{--            // },10000);--}}
-        {{--            //----------------------------}}
-        {{--        }});--}}
-
-        {{--});--}}
-
-        // AJAX Calls
 
     </script>
 @endsection

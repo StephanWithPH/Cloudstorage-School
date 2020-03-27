@@ -39,7 +39,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <small class="d-block mb-3 text-muted text-center">© 2017-2018</small>
+                <small class="d-block mb-3 text-muted text-center">© 2020 - {{ date("Y") }}</small>
             </div>
         </div>
     </div>

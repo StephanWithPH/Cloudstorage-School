@@ -20,30 +20,40 @@
         <br/>
 
         <div class="row">
+            @php
+            $nofiles = true
+            @endphp
             @forelse($sharedfiles as $file)
                 @if($file->pivot->deleted == false)
-                <div class="col-md-6 col-lg-4  col-12 mt-3">
-                    <div class="card">
-                        <img class="card-img-top" src="{{ asset('img/noimage.svg') }}" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title text-truncate">{{ $file->name }}</h5>
-{{--                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>--}}
+                    @php
+                    $nofiles = false
+                    @endphp
+                    <div class="col-md-6 col-lg-4  col-12 mt-3">
+                        <div class="card">
+                            <img class="card-img-top" src="{{ asset('img/noimage.svg') }}" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title text-truncate">{{ $file->name }}</h5>
+    {{--                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>--}}
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item p-1"><a class="btn btn-primary w-100 text-white" href="{{ action('FileController@getShared', $file->id) }}">Download</a></li>
+                                <li class="list-group-item p-1"><a class="btn btn-danger w-100 text-white" href="{{ action('FileController@removeShared', $file->id) }}">Delete share</a ></li>
+                            </ul>
                         </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item p-1"><a class="btn btn-primary w-100 text-white" href="{{ action('FileController@getShared', $file->id) }}">Download</a></li>
-                            <li class="list-group-item p-1"><a class="btn btn-danger w-100 text-white" href="{{ action('FileController@removeShared', $file->id) }}">Delete share</a ></li>
-                        </ul>
                     </div>
-                </div>
                 @endif
             @empty
+                @php
+                $nofiles = true
+                @endphp
+            @endforelse
+            @if($nofiles)
                 <div class="col mt-3">
                     <div class="alert alert-info text-center" role="alert">
                         No one has shared files with you yet!
                     </div>
                 </div>
-            @endforelse
-
+            @endif
         </div>
 
 
