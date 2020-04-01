@@ -19,6 +19,7 @@ class CreateFilesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('name');
             $table->string('path');
+            $table->string('extension')->default('unknown');
             $table->timestamp('deleted_at')->nullable();
             $table->boolean('deleted')->default(false);
             $table->timestamps();

@@ -32,22 +32,34 @@
         </ul>
         <ul class="navbar-nav ml-auto">
             @if(\Illuminate\Support\Facades\Auth::check())
-            <li class="nav-item">
-                <a class="nav-link" href="{{ action('DashboardController@loadSharedFilesPage') }}">{{ __('language.shared') }}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ action('DashboardController@loadFilesPage') }}">{{ __('language.files') }}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ action('Auth\LoginController@logout') }}">{{ __('language.logout') }}</a>
-            </li>
+                @if(\Illuminate\Support\Facades\Auth::user()->is_admin)
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="adminTopbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ __('language.admin') }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="adminTopbarDropdown">
+                            <a class="dropdown-item" href="{{ action('AdminController@loadAdminStatisticsPage') }}">{{ __('language.adminstatistics') }}</a>
+                            <a class="dropdown-item" href="#">{{ __('language.adminusers') }}</a>
+                        </div>
+                    </li>
+                @endif
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ action('DashboardController@loadSharedFilesPage') }}">{{ __('language.shared') }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ action('DashboardController@loadFilesPage') }}">{{ __('language.files') }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ action('Auth\LoginController@logout') }}">{{ __('language.logout') }}</a>
+                </li>
             @else
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('login') }}">{{ __('language.login') }}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link btn btn-primary text-white" href="{{ route('register') }}">{{ __('language.signup') }}</a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('login') }}">{{ __('language.login') }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary text-white" href="{{ route('register') }}">{{ __('language.signup') }}</a>
+                </li>
             @endif
         </ul>
     </div>

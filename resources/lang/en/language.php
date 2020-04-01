@@ -26,7 +26,10 @@ return [
     'features' => 'Features',
     'aboutus' => 'About us',
     'files' => 'Files',
-    'shaed' => 'Shared',
+    'shared' => 'Shared',
+    'admin' => 'Admin',
+    'adminstatistics' => 'Statistics',
+    'adminusers' => 'Users',
 
     /* Files page */
     'nofiles' => 'No files found. Use the upload button to upload one!',
@@ -40,6 +43,13 @@ return [
     'signupnow' => 'Sign up now!',
     'signupnow-description' => 'Sign up here to start using the future cloud storage!',
     'signupnow-orloginwith' => 'or login with',
+
+    /* Admin statistics */
+    'usersregistered' => 'Users registered per month in the year',
+    'filesuploadedpermonth' => 'Files uploaded per month in the year',
+    'userssinglemultiple' => 'user(s)',
+    'adminuserssinglemultiple' => 'admin(s)',
+    'filessinglemultiple' => 'file(s)',
 
     /* Flashes */
     'uploadsuccess' => '<div class="text-center">File successfully uploaded!</div>',

@@ -6,6 +6,7 @@ use App\File;
 use App\User;
 use Facade\Ignition\Support\Packagist\Package;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -42,6 +43,7 @@ class FileController extends Controller
         if ($request->file('fileuploaded')) {
             $file = new File();
             $file->name = $request->file('fileuploaded')->getClientOriginalName();
+            $file->extension = $request->file('fileuploaded')->extension();
             // Save uploaded file to storage
             $path = $request->file('fileuploaded')->store(Auth::user()->email);
 
@@ -165,6 +167,7 @@ class FileController extends Controller
         $file = Auth::user()->files()->where('id', $id)->get()->first();
         if($file) {
             $file->deleted = true;
+            $file->deleted_at = Carbon::now();
             $file->save();
             flash(__('language.deletesuccess'))->success();
         }

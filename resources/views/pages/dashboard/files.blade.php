@@ -39,7 +39,11 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item p-1"><a class="btn btn-primary w-100 text-white" href="{{ action('FileController@get', $file->id) }}">Download</a></li>
                             <li class="list-group-item p-1">
-                                <a class="btn btn-info w-100 text-white" data-toggle="collapse" href="#collapse{{$file->id}}" role="button" aria-expanded="false" aria-controls="collapse{{$file->id}}">Share</a>
+                                @if(!Auth::user()->email_verified_at)
+                                    <a class="btn btn-info w-100 text-white" href="{{ route('verification.notice') }}">Share</a>
+                                @else
+                                    <a class="btn btn-info w-100 text-white" data-toggle="collapse" href="#collapse{{$file->id}}" role="button" aria-expanded="false" aria-controls="collapse{{$file->id}}">Share</a>
+                                @endif
                                 <div class="collapse mt-2" id="collapse{{$file->id}}">
                                     @php
                                     $noshares = true;

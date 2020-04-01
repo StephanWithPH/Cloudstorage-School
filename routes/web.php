@@ -33,6 +33,10 @@ Route::get('/dashboard/files/shared/owner/remove/{id}/{userid}', 'FileController
 Route::post('/dashboard/files/shared/owner/add', 'FileController@addSharedOwner')->middleware('auth', 'verified');
 
 
+/* Admin */
+Route::get('/admin', 'AdminController@loadAdminStatisticsPage')->middleware('auth', 'admin');
+
+
 
 
 Auth::routes(['verify' => true]);
