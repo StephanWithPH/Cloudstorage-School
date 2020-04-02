@@ -26,13 +26,49 @@
             </div>
             <div class="col-md-6 col-12 mt-3">
                 <div class="card w-100">
-                    {{--                    <img class="card-img-top" src="{{ asset('img/noimage.svg') }}" alt="Card image cap">--}}
+                                        {{--<img class="card-img-top" src="{{ asset('img/noimage.svg') }}" alt="Card image cap">--}}
                     <div class="card-img-top" style="height:300px">
                         {!! $filesAdded->container() !!}
                     </div>
                     {!! $filesAdded->script() !!}
                     <div class="card-body">
                         <p class="card-text">{{ __('language.filesuploadedpermonth') }} {{ date("Y") }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-12 mt-3">
+                <div class="card w-100">
+{{--                                        <img class="card-img-top" src="{{ asset('img/noimage.svg') }}" alt="Card image cap">--}}
+                    <div class="card-img-top" style="height:300px">
+                        {!! $timeFileExists->container() !!}
+                    </div>
+                    {!! $timeFileExists->script() !!}
+                    <div class="card-body">
+                        <p class="card-text">{{ __('language.timefileexists') }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-12 mt-3">
+                <div class="card w-100">
+                    {{--                    <img class="card-img-top" src="{{ asset('img/noimage.svg') }}" alt="Card image cap">--}}
+                    <div class="card-img-top" style="height:300px">
+                        {!! $amountOfFilesShared->container() !!}
+                    </div>
+                    {!! $amountOfFilesShared->script() !!}
+                    <div class="card-body">
+                        <p class="card-text">{{ __('language.amountoffilesshared') }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-12 mt-3">
+                <div class="card w-100">
+                    {{--                    <img class="card-img-top" src="{{ asset('img/noimage.svg') }}" alt="Card image cap">--}}
+                    <div class="card-img-top" style="height:300px">
+                        {!! $amountOfFilesDeleted->container() !!}
+                    </div>
+                    {!! $amountOfFilesDeleted->script() !!}
+                    <div class="card-body">
+                        <p class="card-text">{{ __('language.amountoffilesdeleted') }}</p>
                     </div>
                 </div>
             </div>

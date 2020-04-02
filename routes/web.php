@@ -35,8 +35,10 @@ Route::post('/dashboard/files/shared/owner/add', 'FileController@addSharedOwner'
 
 /* Admin */
 Route::get('/admin', 'AdminController@loadAdminStatisticsPage')->middleware('auth', 'admin');
-
-
+Route::get('/admin/users', 'AdminController@loadAdminUsersPage')->middleware('auth', 'admin');
+Route::get('/admin/users/edit/{id}', 'AdminController@loadEditUserPage')->middleware('auth', 'admin');
+Route::post('/admin/users/edit/submit', 'AdminController@editUserSubmit')->middleware('auth', 'admin');
+Route::get('/admin/users/delete/{id}', 'AdminController@deleteUser')->middleware('auth', 'admin');
 
 
 Auth::routes(['verify' => true]);

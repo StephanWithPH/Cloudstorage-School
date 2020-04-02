@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\AmountOfFilesDeleted;
+use App\Charts\AmountOfFilesShared;
 use App\Charts\AverageUsersRegistered;
 use App\Charts\FilesAdded;
+use App\Charts\TimeFileExists;
+use App\Charts\TimeUntilDeletion;
 use App\File;
 use App\User;
 use Illuminate\Http\Request;
@@ -29,42 +33,80 @@ class AdminController extends Controller
      */
     public function loadAdminStatisticsPage()
     {
-        /* Users registered per month */
-        $usersDataArray = [];
-        for($i = 1; $i < 13; $i++){
-            $data = User::whereMonth('created_at', $i)->whereYear('created_at', date('Y'))->count();
-            array_push($usersDataArray, $data);
-        }
+        /* Users registered per month (linechart) */
         $averageUsersRegistered = new AverageUsersRegistered();
-        $averageUsersRegistered->labels(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'November', 'December']);
-        $averageUsersRegistered->dataset('Users', 'line', $usersDataArray)->fill(false)->color('#0049ff');
 
-
-
-        /* Files added per month per file type */
+        /* Files added per month per file type (linechart) */
         $filesAdded = new FilesAdded();
-        $filesAdded->labels(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'November', 'December']);
 
-        $fileExtensions = File::distinct('extension')->get(['extension'])->toArray();
-        $fileExtensionsArray = [];
-        foreach($fileExtensions as $fileExtension){
-            array_push($fileExtensionsArray, $fileExtension['extension']);
-        }
+        /* Time a file already exists */
+        $timeFileExists = new TimeFileExists();
 
-        foreach($fileExtensionsArray as $fileExtensionItem){
-            $filesDataArray = [];
-            for($i = 1; $i < 13; $i++){
-                $data = File::whereMonth('created_at', $i)->whereYear('created_at', date('Y'))->where('extension', $fileExtensionItem)->count();
-                array_push($filesDataArray, $data);
-            }
-            $filesAdded->dataset($fileExtensionItem, 'line', $filesDataArray)->fill(false)->color('#' . substr(md5(mt_rand()), 0, 6));
-        }
+        /* Amount of files shared */
+        $amountOfFilesShared = new AmountOfFilesShared();
 
+        /* Amount of files deleted */
+        $amountOfFilesDeleted = new AmountOfFilesDeleted();
 
         /* Returning view */
         return view('pages.admin.statistics', [
             'averageUsersRegistered' => $averageUsersRegistered,
-            'filesAdded' => $filesAdded
+            'filesAdded' => $filesAdded,
+            'timeFileExists' => $timeFileExists,
+            'amountOfFilesShared' => $amountOfFilesShared,
+            'amountOfFilesDeleted' => $amountOfFilesDeleted
         ]);
+    }
+
+    public function loadAdminUsersPage(){
+        return view('pages.admin.users');
+    }
+
+    public function loadEditUserPage($id){
+        $user = User::find($id);
+        return view('pages.admin.edituser', compact('user'));
+    }
+
+    public function editUserSubmit(Request $request){
+        $user = User::find($request->id);
+
+        if($user){
+            $user->name = $request->name;
+            $user->email = $request->email;
+            if($request->emailverified == "true"){
+                $user->email_verified_at = Carbon::now();
+            }
+            else {
+                $user->email_verified_at = null;
+            }
+
+            if($request->isadmin == "true"){
+                $user->is_admin = true;
+            }
+            else {
+                $user->is_admin = false;
+            }
+            $user->save();
+
+            flash(__('language.editusersuccess'))->success();
+        }
+        else {
+            flash(__('language.editusererror'))->error();
+        }
+        return redirect()->back();
+    }
+
+    public function deleteUser($id){
+        $user = User::find($id);
+
+        if($user){
+            $user->delete();
+
+            flash(__('language.deleteusersuccess'))->success();
+        }
+        else {
+            flash(__('language.deleteusererror'))->error();
+        }
+        return redirect()->back();
     }
 }

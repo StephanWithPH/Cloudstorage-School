@@ -39,7 +39,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="adminTopbarDropdown">
                             <a class="dropdown-item" href="{{ action('AdminController@loadAdminStatisticsPage') }}">{{ __('language.adminstatistics') }}</a>
-                            <a class="dropdown-item" href="#">{{ __('language.adminusers') }}</a>
+                            <a class="dropdown-item" href="{{ action('AdminController@loadAdminUsersPage') }}">{{ __('language.adminusers') }}</a>
                         </div>
                     </li>
                 @endif

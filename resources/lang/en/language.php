@@ -30,6 +30,7 @@ return [
     'admin' => 'Admin',
     'adminstatistics' => 'Statistics',
     'adminusers' => 'Users',
+    'edituser' => 'Edit user',
 
     /* Files page */
     'nofiles' => 'No files found. Use the upload button to upload one!',
@@ -50,6 +51,9 @@ return [
     'userssinglemultiple' => 'user(s)',
     'adminuserssinglemultiple' => 'admin(s)',
     'filessinglemultiple' => 'file(s)',
+    'timefileexists' => 'Time non-deleted files exist in the database',
+    'amountoffilesshared' => 'Amount of files that have ever been shared with people',
+    'amountoffilesdeleted' => 'Amount of files that are deleted',
 
     /* Flashes */
     'uploadsuccess' => '<div class="text-center">File successfully uploaded!</div>',
@@ -67,6 +71,11 @@ return [
     'addsharesuccess' => '<div class="text-center">File successfully shared with user!</div>',
     'shareexists' => '<div class="text-center">The file you are trying to share is already shared with this user!</div>',
     'usernotexists' => '<div class="text-center">The user you are trying to share this file to is not found!</div>',
-    'shareyourself' => '<div class="text-center">You cannot share files with yourself!</div>'
+    'shareyourself' => '<div class="text-center">You cannot share files with yourself!</div>',
+
+    'editusersuccess' => '<div class="text-center">Successfully edited user!</div>',
+    'editusererror' => '<div class="text-center">An error has occured when editing the selected user!</div>',
+    'deleteusersuccess' => '<div class="text-center">Successfully deleted user!</div>',
+    'deleteusererror' => '<div class="text-center">The selected user is not found!</div>',
 
 ];
