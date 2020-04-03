@@ -18,7 +18,7 @@ class FilesAdded extends Chart
 
         $this->labels(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'November', 'December']);
 
-        $fileExtensions = File::distinct('extension')->get(['extension'])->toArray();
+        $fileExtensions = File::distinct('extension')->limit(5)->get(['extension'])->toArray();
         $fileExtensionsArray = [];
         foreach($fileExtensions as $fileExtension){
             array_push($fileExtensionsArray, $fileExtension['extension']);

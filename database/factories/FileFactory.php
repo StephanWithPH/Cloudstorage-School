@@ -2,6 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\File;
 use App\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
@@ -17,13 +18,18 @@ use Illuminate\Support\Str;
 |
 */
 
-$factory->define(User::class, function (Faker $faker) {
+$factory->define(File::class, function (Faker $faker) {
+    $extension = $faker->fileExtension();
+    $deleted = $faker->boolean;
+    $randomdate = $faker->dateTimeBetween('-500 days', '+0 days');
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        'is_admin' => $faker->boolean,
-        'remember_token' => Str::random(10),
+        'name' => $faker->word(). '.' . $extension,
+        'path' => '400032102@st.roc.a12.nl/5zLP6UHMKl8VkSf7DGR0OvjkdATbZVO4JPCNe6sq.jpeg',
+        'extension' => $extension,
+        'deleted_at' => $deleted ? $faker->dateTime : null,
+        'deleted' => $deleted,
+        'created_at' => $randomdate,
+        'updated_at' => $randomdate,
+
     ];
 });

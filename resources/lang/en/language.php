@@ -44,6 +44,7 @@ return [
     'signupnow' => 'Sign up now!',
     'signupnow-description' => 'Sign up here to start using the future cloud storage!',
     'signupnow-orloginwith' => 'or login with',
+    'github' => 'Check us out on github!',
 
     /* Admin statistics */
     'usersregistered' => 'Users registered per month in the year',

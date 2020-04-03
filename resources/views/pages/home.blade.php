@@ -6,6 +6,7 @@
         <div class="row">
             <div class="col-lg-6 col-12 text-center text-lg-left">
                 <h1 class="display-4 text-white font-weight-bold">{{ __('language.displaytitle') }}</h1>
+                <a href="https://github.com/StephanWithPH/Cloudstorage-School" class="btn btn-light btn-lg">{{ __('language.github') }}</a>
             </div>
             <div class="col-lg-6 col-12 text-center text-lg-left">
                 <div class="card" style="width: 100%;">
